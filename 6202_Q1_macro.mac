@@ -1,0 +1,11 @@
+%macro vowel_count 2
+mov esi,%1
+mov edx,%2
+%%r1:
+mov eax,[n1]
+%%r2:
+	mov ecx,10
+	mov edx,5
+	mov eax,10
+	mov eax,[str1]
+%endmacro

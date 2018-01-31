@@ -1,0 +1,74 @@
+python assembler.py
+***
+89
+[['section', '.text'], ['global', 'main'], ['extern', 'printf'], ['main:'], ['mov', 'eax', 'ebp'], ['mov', 'ebx', 'eax'], ['mov', 'eax', 'ebx'], ['mov', 'eax', 'ecx'], ['mov', 'eax', '[arr]'], ['mov', 'eax', '10'], ['mov', 'ax', '[b]'], ['mov', 'eax', 'edx'], ['mov', 'ebx', 'esi'], ['mov', 'ecx', '[a]'], ['mov', 'ecx', '[pf]'], ['mov', 'ecx', '[a1]'], ['mov', 'bx', 'bx']]
+
+
+			LITERAL TABLE
+
+[['10', 'A', '0000000A']]
+
+
+			SYMBOL TABLE
+
+0 		0 		a 		db 		5 		D 		00000000 		hello 
+1 		1 		c 		dd 		4 		D 		00000005 		10 
+2 		2 		b 		dd 		4 		D 		00000009 		10 
+3 		3 		pf 		db 		13 		D 		0000000D 		Enter ur r no 
+4 		4 		arr 		dd 		20 		D 		0000001A 		0,3,5,2,00 
+5 		0 		a1 		resd 		4 		D 		00000000 		_
+6 		1 		a2 		resb 		10 		D 		00000004 		_
+7 		0 		global 		main 		_ 		D 		0 		_
+8 		1 		extern 		printf 		_ 		D 		0 		_
+9 		2 		main 		_ 		_ 		D 		0 		_
+
+
+			INTERMEDIATE CODE
+
+0 		        		        		section .text 
+1 		        		        		global main 
+2 		        		        		extern printf 
+3 		_ 		         		main: 
+4 		2 		mov1 r32,r32 		mov eax ebp 
+5 		4 		mov1 r32,r32 		mov ebx eax 
+6 		6 		mov1 r32,r32 		mov eax ebx 
+7 		8 		mov1 r32,r32 		mov eax ecx 
+8 		12 		mov2 r32,sym4 		mov eax [arr] 
+9 		16 		mov3 r32,imm10 		mov eax 10 
+10 		20 		mov6 r32,sym2 		mov ax [b] 
+11 		22 		mov1 r32,r32 		mov eax edx 
+12 		24 		mov1 r32,r32 		mov ebx esi 
+13 		28 		mov2 r32,sym0 		mov ecx [a] 
+14 		32 		mov2 r32,sym3 		mov ecx [pf] 
+15 		36 		mov2 r32,sym0 		mov ecx [a1] 
+16 		37 		mov5 r16,r16 		mov bx bx 
+
+
+			LST FILE
+
+			section .data
+00000000 		a db "hello",10,0 		68656C6C6F00
+00000005 		c dd 10 		000000000A
+00000009 		b dd 10 		000000000A
+0000000D 		pf db "Enter ur r no" 		456E7465720075720072006E6F00
+0000001A 		arr dd 0,3,5,2,00 		00000000000000000003000000000500000000020000000000
+			section .bss
+00000000 		a1 resd 1 		<res 00000004>
+00000004 		a2 resb 10 		<res 0000000A>
+			section .text
+			global main
+			extern printf
+			main:
+00000000 		mov eax,ebp 		89E8
+00000002 		mov ebx,eax 		89C3
+00000004 		mov eax,ebx 		89D8
+00000006 		mov eax,ecx 		89C8
+00000008 		mov eax,[arr] 		A1[0000001A]
+0000000D 		mov eax,10 		B80A000000
+00000012 		mov ax,[b] 		66A1[00000009]
+00000018 		mov eax,edx 		89D0
+0000001A 		mov ebx,esi 		89F3
+0000001C 		mov ecx,[a] 		8B0D[00000000]
+00000022 		mov ecx,[pf] 		8B0D[0000000D]
+00000028 		mov ecx,[a1] 		8B0D[00000000]
+0000002E 		mov bx,bx 		6689DB
